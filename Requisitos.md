@@ -14,7 +14,9 @@ Integrantes:
    - 1.2 [Diagrama de Caso de Uso — Cliente](#12-diagrama-de-caso-de-uso--cliente)
    - 1.3 [Diagrama de Caso de Uso — Restaurante](#13-diagrama-de-caso-de-uso--restaurante)
    - 1.4 [Diagrama de Caso de Uso — Entregador](#14-diagrama-de-caso-de-uso--entregador)
-   - 1.5 [Especificações dos Casos de Uso](#15-especificações-dos-casos-de-uso)
+   - 1.5 [Diagrama de Caso de Uso — Admin da Plataforma ](#15-diagrama-de-caso-de-uso--admin-da-plataforma)
+   - 1.6 [Diagrama de Caso de Uso — APIs Externas](#16-diagrama-de-caso-de-uso--apis-externas)
+   - 1.7 [Especificações dos Casos de Uso](#17-especificações-dos-casos-de-uso)
 2. [Requisitos Não Funcionais](#2-requisitos-não-funcionais)
 3. [Referências](#3-referências)
 
@@ -54,67 +56,32 @@ Serviço de Notificações              ──── Notificar Usuarios
 ---
 
 ### 1.2 Diagrama de Caso de Uso — Cliente
-```
-(UC01) Cadastrar-se / Autenticar-se        
-         |                                
-(UC02) Buscar Restaurante por Localização  
-         |                                 
-(UC03) Visualizar Cardápio                 
-         |                               
-(UC04) Realizar Pedido                     
-         | <<include>> ──> (UC05) Pagar      
-                           
-(UC06) Acompanhar Entrega em Tempo Real    
-                                           
-(UC07) Avaliar Restaurante e Entregador    
-                                           
-(UC08) Gerenciar Histórico de Pedidos      
-                                           
-(UC09) Salvar Endereços Favoritos          
-```
+
+![Cliente](assets/cliente.png)
 
 ---
 
 ### 1.3 Diagrama de Caso de Uso — Restaurante
-```
-(UC10) Cadastrar Restaurante na Plataforma   
-                                          
-(UC11) Gerenciar Cardápio                    
-       | <extend> ──> (UC12) Marcar Item  
-                         como Indisponível   
-                                          
-(UC13) Definir Horários de Funcionamento     
-                                          
-(UC14) Receber e Gerenciar Pedidos           
-       | <<include>> ──> (UC15) Notificar   
-                          Entregador         
-                                          
-(UC16) Visualizar Avaliações dos Clientes    
-```
+
+![Restaurante](assets/restaurante.png)
 
 ---
 
 ### 1.4 Diagrama de Caso de Uso — Entregador
-```
-(UC17) Cadastrar-se como Entregador        
-                                           
-(UC18) Definir Disponibilidade             
-                                           
-(UC19) Receber Oferta de Entrega           
-       | <<include>>    ──> (UC20) Aceitar   
-       | <extend>  ──> (UC21) Recusar   
-                                           
-(UC22) Atualizar Status da Entrega         
-                                           
-(UC23) Navegar até Restaurante / Cliente   
-       | <<include>> ──> API de Mapas     
-                                           
-(UC24) Visualizar Painel de Ganhos         
-```
+
+![Entregador](assets/entregador.png)
+
+### 1.5 Diagrama de Caso de Uso — Admin da Plataforma
+
+![Admin](assets/admin.png)
+
+### 1.6 Diagrama de Caso de Uso — APIs Externas
+
+![Externo](assets/externo.png)
 
 ---
 
-### 1.5 Especificações dos Casos de Uso
+### 1.7 Especificações dos Casos de Uso
 
 ---
 
