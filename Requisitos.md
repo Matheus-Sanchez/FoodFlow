@@ -23,11 +23,11 @@ Integrantes:
 ## 1. Requisitos Funcionais
 
 ### 1.1 Diagrama de Caso de Uso — Visão Geral
-
+```
 Autenticar-se                        ───────────────────────────────────────────────── Cliente
 Buscar Restaurante                                                       
 Realizar Pedido 
-   |inclui ──> Processar Pagamento                 
+   | inclui ──> Processar Pagamento                 
 Acompanhar Entrega em Tempo Real                                         
 Avaliar Restaurante / Entregador                                         
 Gerenciar Histórico de Pedidos                                           
@@ -46,15 +46,15 @@ Gerenciar Usuários e Restaurantes    ──────────────
 Visualizar Métricas e Logs                                        
 Gerenciar Disputas                                                
                                                                     
-         --- APIs externa ---
+ --- APIs externa ---
 Gateway de Pagamento                 ──── Processar Pagamento                     
 API de Mapas                         ──── Acompanhar Entrega em Tempo Real       
 Serviço de Notificações              ──── Notificar Usuarios   
-
+```
 ---
 
 ### 1.2 Diagrama de Caso de Uso — Cliente
-
+```
 (UC01) Cadastrar-se / Autenticar-se        
          |                                
 (UC02) Buscar Restaurante por Localização  
@@ -71,12 +71,12 @@ Serviço de Notificações              ──── Notificar Usuarios
 (UC08) Gerenciar Histórico de Pedidos      
                                            
 (UC09) Salvar Endereços Favoritos          
-
+```
 
 ---
 
 ### 1.3 Diagrama de Caso de Uso — Restaurante
-
+```
 (UC10) Cadastrar Restaurante na Plataforma   
                                           
 (UC11) Gerenciar Cardápio                    
@@ -90,12 +90,12 @@ Serviço de Notificações              ──── Notificar Usuarios
                           Entregador         
                                           
 (UC16) Visualizar Avaliações dos Clientes    
-
+```
 
 ---
 
 ### 1.4 Diagrama de Caso de Uso — Entregador
-
+```
 (UC17) Cadastrar-se como Entregador        
                                            
 (UC18) Definir Disponibilidade             
@@ -110,7 +110,7 @@ Serviço de Notificações              ──── Notificar Usuarios
        |inclui ──> API de Mapas     
                                            
 (UC24) Visualizar Painel de Ganhos         
-
+```
 
 ---
 
