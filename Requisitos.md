@@ -27,7 +27,7 @@ Integrantes:
 Autenticar-se                        ───────────────────────────────────────────────── Cliente
 Buscar Restaurante                                                       
 Realizar Pedido 
-   | inclui ──> Processar Pagamento                 
+   | <<include>> ──> Processar Pagamento                 
 Acompanhar Entrega em Tempo Real                                         
 Avaliar Restaurante / Entregador                                         
 Gerenciar Histórico de Pedidos                                           
@@ -62,7 +62,7 @@ Serviço de Notificações              ──── Notificar Usuarios
 (UC03) Visualizar Cardápio                 
          |                               
 (UC04) Realizar Pedido                     
-         |inclui ──> (UC05) Pagar      
+         | <<include>> ──> (UC05) Pagar      
                            
 (UC06) Acompanhar Entrega em Tempo Real    
                                            
@@ -80,13 +80,13 @@ Serviço de Notificações              ──── Notificar Usuarios
 (UC10) Cadastrar Restaurante na Plataforma   
                                           
 (UC11) Gerenciar Cardápio                    
-       |extensão ──> (UC12) Marcar Item  
+       | <extend> ──> (UC12) Marcar Item  
                          como Indisponível   
                                           
 (UC13) Definir Horários de Funcionamento     
                                           
 (UC14) Receber e Gerenciar Pedidos           
-       |inclui ──> (UC15) Notificar   
+       | <<include>> ──> (UC15) Notificar   
                           Entregador         
                                           
 (UC16) Visualizar Avaliações dos Clientes    
@@ -101,13 +101,13 @@ Serviço de Notificações              ──── Notificar Usuarios
 (UC18) Definir Disponibilidade             
                                            
 (UC19) Receber Oferta de Entrega           
-       |inclui    ──> (UC20) Aceitar   
-       |extensão  ──> (UC21) Recusar   
+       | <<include>>    ──> (UC20) Aceitar   
+       | <extend>  ──> (UC21) Recusar   
                                            
 (UC22) Atualizar Status da Entrega         
                                            
 (UC23) Navegar até Restaurante / Cliente   
-       |inclui ──> API de Mapas     
+       | <<include>> ──> API de Mapas     
                                            
 (UC24) Visualizar Painel de Ganhos         
 ```
