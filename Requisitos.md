@@ -15,13 +15,10 @@
 ## Sumário
 
 1. [Requisitos Funcionais](#1-requisitos-funcionais)
-   - 1.1 [Diagrama de Caso de Uso - Visão Geral](#11-diagrama-de-caso-de-uso--visão-geral)
-   - 1.2 [Diagrama de Caso de Uso - Cliente](#12-diagrama-de-caso-de-uso--cliente)
-   - 1.3 [Diagrama de Caso de Uso - Restaurante](#13-diagrama-de-caso-de-uso--restaurante)
-   - 1.4 [Diagrama de Caso de Uso - Entregador](#14-diagrama-de-caso-de-uso--entregador)
-   - 1.5 [Diagrama de Caso de Uso - Admin da Plataforma](#15-diagrama-de-caso-de-uso--admin-da-plataforma)
-   - 1.6 [Diagrama de Caso de Uso - APIs Externas](#16-diagrama-de-caso-de-uso--apis-externas)
-   - 1.7 [Especificações dos Casos de Uso](#17-especificações-dos-casos-de-uso)
+   - 1.1 [Diagrama de Caso de Uso - Visão Geral](#11-diagrama-de-caso-de-uso---visão-geral)
+   - 1.2 [Histórias de Usuário por Subsistema](#12-histórias-de-usuário-por-subsistema)
+   - 1.3 [Estimativa de Tamanho](#13-estimativa-de-tamanho)
+   - 1.4 [Priorização com MoSCoW](#14-priorização-com-moscow)
 2. [Requisitos Não Funcionais](#2-requisitos-não-funcionais)
 3. [Referências](#3-referências)
 
@@ -65,462 +62,157 @@ Serviço de Notificações              ──── Notificar Usuários
 
 ---
 
-### 1.2 Diagrama de Caso de Uso - Cliente
-
+**Cliente**
 ![Cliente](assets/cliente.png)
 
 ---
 
-### 1.3 Diagrama de Caso de Uso - Restaurante
-
+**Restaurante**
 ![Restaurante](assets/restaurante.png)
 
 ---
 
-### 1.4 Diagrama de Caso de Uso - Entregador
-
+**Entregador**
 ![Entregador](assets/entregador.png)
 
 ---
 
-### 1.5 Diagrama de Caso de Uso - Admin da Plataforma
-
+**Admin da Plataforma**
 ![Admin](assets/admin.png)
 
 ---
 
-### 1.6 Diagrama de Caso de Uso - APIs Externas
-
+**APIs Externas**
 ![Externo](assets/externo.png)
 
 ---
 
-### 1.7 Especificações dos Casos de Uso
+### 1.2 Histórias de Usuário por Subsistema
+
+Abaixo estão descritas as histórias de usuário mapeadas para os subsistemas do projeto FoodFlow, no formato ágil exigido.
+
+#### 1.2.1 Subsistema Cliente (B2C)
+
+| ID | História | Critérios de Aceitação | Dependências | Fonte |
+|:---|:---|:---|:---|:---|
+| **US-CLI-001** | **Como** cliente, **eu quero** me cadastrar e autenticar na plataforma, **para que** eu possa acessar os restaurantes e salvar meus dados de forma segura. | (a) O sistema deve validar e-mail e senha. (b) Impedir cadastros duplicados. (c) Login concluído em até 2 segundos. | Nenhuma | Cliente |
+| **US-CLI-002** | **Como** cliente, **eu quero** buscar restaurantes por localização ou endereço, **para que** eu encontre opções de entrega disponíveis na minha região. | (a) Exibir restaurantes em um raio configurável. (b) Ocultar restaurantes fechados no momento da busca. | US-CLI-001 | Cliente |
+| **US-CLI-003** | **Como** cliente, **eu quero** visualizar o cardápio detalhado, **para que** eu possa ver fotos, descrições, preços e escolher meus pratos. | (a) Refletir a versão mais atualizada do cardápio. (b) Bloquear itens marcados como indisponíveis. | US-CLI-002 | Cliente |
+| **US-CLI-004** | **Como** cliente, **eu quero** adicionar itens ao carrinho e realizar o pedido, **para que** o sistema calcule o valor total e a taxa de entrega automaticamente. | (a) Atualizar valores do carrinho em tempo real. (b) Bloquear a confirmação se o carrinho estiver vazio. | US-CLI-003 | Cliente |
+| **US-CLI-005** | **Como** cliente, **eu quero** pagar online via gateway (cartão ou PIX), **para que** eu tenha uma experiência rápida e segura sem usar dinheiro físico. | (a) Aprovação ou recusa do gateway em até 5s. (b) O sistema não deve armazenar dados do cartão. | US-CLI-004 | Cliente |
+| **US-CLI-006** | **Como** cliente, **eu quero** acompanhar o status do pedido e a localização do entregador em tempo real, **para que** eu saiba exatamente quando minha comida chegará. | (a) Atualizar posição do entregador a cada 15s no mapa. (b) Exibir mudanças de status sem recarregar a tela. | US-CLI-004 | Cliente |
+| **US-CLI-007** | **Como** cliente, **eu quero** avaliar o restaurante e o entregador após a entrega, **para que** eu possa compartilhar minha experiência e ajudar a manter a qualidade. | (a) Liberar avaliação apenas com status "Entregue". (b) Atualizar a nota média do restaurante imediatamente. | US-CLI-006 | Cliente |
+| **US-CLI-008** | **Como** cliente, **eu quero** acessar meu histórico de pedidos anteriores, **para que** eu possa repetir um pedido favorito rapidamente com um clique. | (a) Exibir pedidos dos últimos 12 meses. (b) Pré-preencher o carrinho ao clicar em "repetir pedido". | US-CLI-004 | Cliente |
+| **US-CLI-009** | **Como** cliente, **eu quero** salvar meus endereços favoritos, **para que** eu possa fazer pedidos mais rapidamente sem digitar tudo de novo. | (a) Permitir apelidos como "Casa" ou "Trabalho". | Nenhuma | Cliente |
+| **US-CLI-010** | **Como** cliente, **eu quero** contatar o suporte da plataforma, **para que** eu possa relatar problemas não resolvidos com o restaurante ou entregador. | (a) Abertura de chamado direto pelo app. | US-CLI-008 | Cliente |
+
+
+#### 1.2.2 Subsistema Restaurante (B2B)
+
+| ID | História | Critérios de Aceitação | Dependências | Fonte |
+|:---|:---|:---|:---|:---|
+| **US-RES-001** | **Como** administrador do restaurante, **eu quero** cadastrar e configurar meu perfil, **para que** o estabelecimento fique visível na plataforma. | (a) Validação de CNPJ obrigatória. (b) Aprovação em até 48h. (c) Dados bancários devem ser criptografados. | Nenhuma | Restaurante |
+| **US-RES-002** | **Como** administrador do restaurante, **eu quero** gerenciar o cardápio, **para que** eu possa adicionar, editar ou remover pratos e preços. | (a) Alterações visíveis ao cliente em até 30s. (b) Exigir nome e preço para salvar. | US-RES-001 | Restaurante |
+| **US-RES-003** | **Como** administrador do restaurante, **eu quero** marcar itens como indisponíveis, **para que** clientes não comprem produtos que estão sem estoque. | (a) Atualização em 30s para o cliente. (b) Indicação visual de bloqueio no app. | US-RES-002 | Restaurante |
+| **US-RES-004** | **Como** administrador do restaurante, **eu quero** configurar horários de funcionamento, **para que** eu receba pedidos apenas quando estiver aberto. | (a) Ocultar restaurante fora do horário. (b) Alterações devem entrar em vigor imediatamente. | US-RES-001 | Restaurante |
+| **US-RES-005** | **Como** administrador do restaurante, **eu quero** receber notificações e gerenciar pedidos, **para que** eu possa prepará-los e iniciar o fluxo de entrega. | (a) Notificação em até 10s do pagamento. (b) Cancelar pedido automaticamente após 3 min sem aceite. | US-CLI-005 | Restaurante |
+| **US-RES-006** | **Como** administrador do restaurante, **eu quero** visualizar as avaliações recebidas, **para que** eu possa monitorar a qualidade do serviço. | (a) Ordem cronológica decrescente. (b) Recálculo da média em tempo real. | US-CLI-007 | Restaurante |
+| **US-RES-007** | **Como** administrador do restaurante, **eu quero** pausar o recebimento de pedidos temporariamente, **para que** a cozinha não fique sobrecarregada nos horários de pico. | (a) Ocultar restaurante da busca instantaneamente. | US-RES-004 | Restaurante |
+| **US-RES-008** | **Como** administrador do restaurante, **eu quero** criar cupons de desconto, **para que** eu possa atrair e fidelizar mais clientes. | (a) Definir % de desconto, data de validade e limite de uso. | US-RES-002 | Restaurante |
+| **US-RES-009** | **Como** administrador do restaurante, **eu quero** visualizar um extrato de repasses financeiros, **para que** eu possa fazer a conciliação bancária do meu negócio. | (a) Exibir valores líquidos após dedução da taxa da plataforma. | US-RES-005 | Restaurante |
+| **US-RES-010** | **Como** administrador do restaurante, **eu quero** contatar o entregador alocado, **para que** eu possa avisar sobre detalhes da coleta ou atrasos. | (a) Chat anonimizado disponível apenas enquanto o pedido não for coletado. | US-RES-005 | Restaurante |
+
+#### 1.2.3 Subsistema Entregador (Logística)
+
+| ID | História | Critérios de Aceitação | Dependências | Fonte |
+|:---|:---|:---|:---|:---|
+| **US-ENT-001** | **Como** entregador, **eu quero** me cadastrar enviando dados e documentos, **para que** eu seja aprovado para trabalhar na plataforma. | (a) Upload de foto legível da CNH/CRLV. (b) Análise em até 3 dias úteis. | Nenhuma | Entregador |
+| **US-ENT-002** | **Como** entregador, **eu quero** me autenticar no aplicativo, **para que** eu possa acessar minha conta de forma segura. | (a) Login em até 2s. (b) Bloqueio de 15 min após 5 tentativas falhas. | US-ENT-001 | Entregador |
+| **US-ENT-003** | **Como** entregador, **eu quero** definir minha disponibilidade (online/offline), **para que** eu receba ofertas baseadas no meu GPS. | (a) Iniciar GPS ao ficar online. (b) Bloquear ação se houver pedido em andamento. | US-ENT-002 | Entregador |
+| **US-ENT-004** | **Como** entregador, **eu quero** receber ofertas de entrega detalhadas, **para que** eu analise a distância e o valor antes de aceitar. | (a) Oferta expira em 30s. (b) Priorizar entregadores próximos ao restaurante. | US-ENT-003 | Entregador |
+| **US-ENT-005** | **Como** entregador, **eu quero** aceitar ou recusar uma entrega, **para que** eu tenha flexibilidade nas rotas. | (a) Aceite bloqueia a oferta para outros. (b) Repassar oferta se recusada. | US-ENT-004 | Entregador |
+| **US-ENT-006** | **Como** entregador, **eu quero** atualizar o status da entrega, **para que** o cliente e a plataforma acompanhem o progresso. | (a) Registrar GPS a cada mudança. (b) Status "Entregue" aciona o repasse de valor. | US-ENT-005 | Entregador |
+| **US-ENT-007** | **Como** entregador, **eu quero** visualizar um painel com meus ganhos, **para que** eu controle minhas finanças. | (a) Atualização em tempo real após entrega. (b) Exibir saldo disponível para saque. | US-ENT-006 | Entregador |
+| **US-ENT-008** | **Como** entregador, **eu quero** reportar um problema com a entrega (ex: pneu furado, acidente), **para que** a plataforma possa realocar outro entregador. | (a) Pausar corrida e alertar suporte imediatamente. | US-ENT-005 | Entregador |
+| **US-ENT-009** | **Como** entregador, **eu quero** contatar o cliente via chat anonimizado, **para que** eu possa tirar dúvidas sobre o endereço ou avisar que cheguei. | (a) Chat liberado apenas com o status "A caminho do cliente". | US-ENT-006 | Entregador |
+| **US-ENT-010** | **Como** entregador, **eu quero** visualizar o histórico de rotas realizadas, **para que** eu possa analisar quais regiões são mais lucrativas. | (a) Mapa de calor com o histórico de corridas do próprio usuário. | US-ENT-007 | Entregador |
+
+#### 1.2.4 Subsistema Admin da Plataforma (Backoffice)
+
+| ID | História | Critérios de Aceitação | Dependências | Fonte |
+|:---|:---|:---|:---|:---|
+| **US-ADM-001** | **Como** admin, **eu quero** me autenticar com 2FA, **para que** o painel de gestão fique protegido contra acessos indevidos. | (a) 2FA obrigatório. (b) Sessão expira em 30 min de inatividade. | Nenhuma | Admin |
+| **US-ADM-002** | **Como** admin, **eu quero** gerenciar usuários, **para que** eu possa suspender contas que violem os termos de uso. | (a) Bloqueio imediato ao suspender. (b) Anonimização de dados ao excluir (LGPD). | US-ADM-001 | Admin |
+| **US-ADM-003** | **Como** admin, **eu quero** aprovar e gerenciar restaurantes, **para que** apenas parceiros verificados operem no sistema. | (a) Restaurante aprovado fica visível em até 5 min. (b) Acesso ao histórico para auditoria. | US-ADM-001 | Admin |
+| **US-ADM-004** | **Como** admin, **eu quero** visualizar métricas e logs, **para que** eu monitore a saúde do negócio e a estabilidade técnica. | (a) Dashboard atualizado a cada 60s. (b) Retenção de logs por 90 dias. | US-ADM-001 | Admin |
+| **US-ADM-005** | **Como** admin, **eu quero** gerenciar disputas, **para que** eu possa reembolsar clientes ou advertir parceiros. | (a) Alerta automático de nova disputa. (b) Prazo de SLA de 5 dias úteis. | US-ADM-001 | Admin |
+| **US-ADM-006** | **Como** admin, **eu quero** configurar o raio máximo de entrega dinamicamente, **para que** eu possa limitar pedidos em dias de chuva forte ou falta de entregadores. | (a) Alteração global aplicada a todos os restaurantes. | US-ADM-001 | Admin |
+| **US-ADM-007** | **Como** admin, **eu quero** gerenciar cupons de desconto globais da plataforma, **para que** o time de marketing possa criar campanhas sazonais (ex: Black Friday). | (a) Criação de cupons que a plataforma subsidia. | US-ADM-001 | Admin |
+| **US-ADM-008** | **Como** admin, **eu quero** processar os repasses financeiros para os restaurantes, **para que** eles recebam os pagamentos conforme os prazos de liquidação. | (a) Integração automática com a subadquirente de pagamentos. | US-ADM-003 | Admin |
+| **US-ADM-009** | **Como** admin, **eu quero** processar os repasses financeiros para os entregadores, **para que** eles possam sacar os valores de suas corridas. | (a) Disparo de transferência via PIX. | US-ADM-002 | Admin |
+| **US-ADM-010** | **Como** admin, **eu quero** visualizar um mapa de calor de pedidos em tempo real, **para que** eu possa direcionar incentivos para entregadores irem para áreas de alta demanda. | (a) Mapa exibindo concentração de pedidos pendentes por bairro. | US-ADM-004 | Admin |
 
 ---
 
-## 1.7.1 Cliente
+### 1.3 Estimativa de Tamanho
+
+Para estimar o tamanho de cada história de usuário, utilizamos a metodologia de **Story Points (escala Fibonacci: 1, 2, 3, 5, 8, 13, 21)**. 
+
+**Justificativa:** Esta metodologia é a mais adequada para o escopo do FoodFlow pois permite mensurar o esforço baseado na complexidade técnica (ex: integrações com APIs externas de pagamento e mapas) e nas incertezas da arquitetura, sendo mais eficaz do que estimativas baseadas em horas absolutas para equipes ágeis em formação.
 
 ---
 
-#### UC01: Cadastrar-se / Autenticar-se
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-001 |
-| **Nome** | Cadastrar-se / Autenticar-se |
-| **Descrição** | O cliente deve poder criar uma conta informando nome, e-mail e senha, ou autenticar-se com credenciais existentes para acessar as funcionalidades da plataforma. |
-| **Extensões** | Recuperação de senha via e-mail; login com conta Google (futuro). |
-| **Critérios de Aceitação** | (a) O sistema deve validar o e-mail e a senha no momento do cadastro. (b) O sistema deve impedir cadastros com e-mails duplicados. (c) A autenticação deve redirecionar o usuário para a tela inicial em até 2 segundos. |
-| **Dependências** | Nenhuma, pré-condição para todos os demais casos de uso do cliente. |
-| **Fonte** | Cliente (USER-001) |
-| **Prioridade** | Alta |
-
----
-
-#### UC02: Buscar Restaurante por Localização
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-002 |
-| **Nome** | Buscar Restaurante por Localização |
-| **Descrição** | O cliente deve poder buscar restaurantes disponíveis com base em sua localização atual ou em um endereço informado manualmente, podendo filtrar por tipo de culinária. |
-| **Extensões** | Filtrar por avaliação mínima; ordenar por tempo de entrega estimado; ordenar por taxa de entrega. |
-| **Critérios de Aceitação** | (a) O sistema deve exibir restaurantes em um raio configurável a partir da localização do cliente. (b) Restaurantes fora do horário de funcionamento devem aparecer como indisponíveis. (c) A listagem deve carregar em até 3 segundos. |
-| **Dependências** | FF-UC-001 (autenticação); Integração com API de Mapas. |
-| **Fonte** | Cliente (USER-001) |
-| **Prioridade** | Alta |
-
----
-
-#### UC03: Visualizar Cardápio
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-003 |
-| **Nome** | Visualizar Cardápio |
-| **Descrição** | O cliente deve poder visualizar o cardápio completo de um restaurante selecionado, com nome dos itens, descrição, preço e imagem (quando disponível). Itens indisponíveis devem estar claramente marcados. |
-| **Extensões** | Filtragem por categoria (ex.: entradas, pratos principais, bebidas); busca de item por nome. |
-| **Critérios de Aceitação** | (a) O cardápio deve refletir a versão mais atualizada cadastrada pelo restaurante. (b) Itens marcados como indisponíveis não devem permitir adição ao carrinho. |
-| **Dependências** | FF-UC-002; FF-UC-011 (gerenciamento de cardápio pelo restaurante). |
-| **Fonte** | Cliente (USER-001); Administrador do Restaurante (USER-002) |
-| **Prioridade** | Alta |
-
----
-
-#### UC04: Realizar Pedido
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-004 |
-| **Nome** | Realizar Pedido |
-| **Descrição** | O cliente deve poder selecionar itens do cardápio, adicioná-los ao carrinho, revisar o pedido e confirmar. O sistema deve calcular automaticamente o subtotal, a taxa de entrega e o total. |
-| **Extensões** | Adicionar observações por item (ex.: "sem cebola"); inserir cupom de desconto. |
-| **Critérios de Aceitação** | (a) O carrinho deve atualizar os valores em tempo real a cada item adicionado ou removido. (b) Não deve ser possível confirmar um pedido com carrinho vazio. (c) O sistema deve exibir o tempo estimado de entrega antes da confirmação. |
-| **Dependências** | FF-UC-003 (visualizar cardápio); FF-UC-005 (processar pagamento). |
-| **Fonte** | Cliente (USER-001) |
-| **Prioridade** | Alta |
-
----
-
-#### UC05: Processar Pagamento
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-005 |
-| **Nome** | Processar Pagamento |
-| **Descrição** | O sistema deve integrar-se a um gateway de pagamento externo para processar o pagamento do pedido, suportando cartão de crédito, débito e PIX. O sistema não deve armazenar dados do cartão diretamente. |
-| **Extensões** | Salvar forma de pagamento para uso futuro (tokenização via gateway); pagamento em dinheiro na entrega. |
-| **Critérios de Aceitação** | (a) O pagamento deve ser confirmado ou recusado pelo gateway em até 5 segundos. (b) Em caso de falha no pagamento, o pedido não deve ser criado. (c) Dados do cartão não devem ser armazenados nos servidores do FoodFlow. |
-| **Dependências** | FF-UC-004; Integração com Gateway de Pagamento. |
-| **Fonte** | Cliente (USER-001) |
-| **Prioridade** | Alta |
-
----
-
-#### UC06: Acompanhar Entrega em Tempo Real
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-006 |
-| **Nome** | Acompanhar Entrega em Tempo Real |
-| **Descrição** | Após a confirmação do pedido, o cliente deve poder visualizar o status atual do pedido (confirmado, em preparo, coletado, em trânsito, entregue) e a localização em tempo real do entregador no mapa. |
-| **Extensões** | Notificação push a cada mudança de status; contato via chat anonimizado com entregador. |
-| **Critérios de Aceitação** | (a) A posição do entregador deve ser atualizada a cada 15 segundos no mapa. (b) As mudanças de status do pedido devem ser exibidas em tempo real, sem necessidade de recarregar a página. |
-| **Dependências** | FF-UC-004; FF-UC-022 (atualização de status pelo entregador); API de Mapas. |
-| **Fonte** | Cliente (USER-001) |
-| **Prioridade** | Alta |
-
----
-
-#### UC07: Avaliar Restaurante e Entregador
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-007 |
-| **Nome** | Avaliar Restaurante e Entregador |
-| **Descrição** | Após a conclusão da entrega, o cliente deve poder atribuir uma nota (1 a 5 estrelas) e um comentário opcional tanto ao restaurante quanto ao entregador. |
-| **Extensões** | Denúncia de comportamento inadequado pelo entregador; resposta do restaurante ao comentário (futuro). |
-| **Critérios de Aceitação** | (a) A avaliação só deve ser possível após o status do pedido ser "Entregue". (b) Cada pedido permite apenas uma avaliação por ator. (c) A nota média do restaurante deve ser atualizada imediatamente após a submissão. |
-| **Dependências** | FF-UC-006 (pedido concluído). |
-| **Fonte** | Cliente (USER-001) |
-| **Prioridade** | Média |
-
----
-
-#### UC08: Gerenciar Histórico de Pedidos
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-008 |
-| **Nome** | Gerenciar Histórico de Pedidos |
-| **Descrição** | O cliente deve poder visualizar todos os pedidos realizados anteriormente, com detalhes como itens, valores, data, status final e restaurante. Deve ser possível repetir um pedido anterior com um clique. |
-| **Extensões** | Filtrar histórico por período ou restaurante; exportar comprovante de pedido em PDF. |
-| **Critérios de Aceitação** | (a) O histórico deve exibir todos os pedidos dos últimos 12 meses. (b) A opção de repetir pedido deve pré-preencher o carrinho com os mesmos itens do pedido original, desconsiderando itens indisponíveis. (c) O histórico deve carregar em até 2 segundos. |
-| **Dependências** | FF-UC-004 (pedidos realizados); FF-UC-001 (autenticação). |
-| **Fonte** | Cliente (USER-001) |
-| **Prioridade** | Média |
-
----
-
-## 1.7.2 Administrador do Restaurante
-
----
-
-#### UC10: Cadastrar e Configurar Restaurante
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-010 |
-| **Nome** | Cadastrar e Configurar Restaurante |
-| **Descrição** | O administrador do restaurante deve poder criar o perfil do estabelecimento na plataforma, informando nome, endereço, CNPJ, tipo de culinária, logo, fotos e dados bancários para recebimento. |
-| **Extensões** | Editar dados do perfil a qualquer momento; desativar temporariamente o restaurante na plataforma. |
-| **Critérios de Aceitação** | (a) O cadastro só deve ser concluído após validação do CNPJ. (b) O restaurante recém-cadastrado deve ficar em análise pela equipe da plataforma por até 48 horas antes de se tornar visível. (c) Dados bancários devem ser armazenados de forma criptografada. |
-| **Dependências** | Nenhuma, pré-condição para todos os demais casos de uso do restaurante. |
-| **Fonte** | Administrador do Restaurante (USER-002) |
-| **Prioridade** | Alta |
-
----
-
-#### UC11: Gerenciar Cardápio
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-011 |
-| **Nome** | Gerenciar Cardápio |
-| **Descrição** | O administrador do restaurante deve poder criar, editar, excluir e reordenar itens do cardápio, definindo nome, descrição, preço, categoria e disponibilidade de cada item. |
-| **Extensões** | Marcar item como indisponível temporariamente sem excluí-lo (FF-UC-012); duplicar item para criação rápida. |
-| **Critérios de Aceitação** | (a) Alterações no cardápio devem ser refletidas na visão do cliente em até 30 segundos. (b) Não deve ser possível salvar um item sem nome e preço. (c) Itens excluídos não devem aparecer em novos pedidos, mas devem ser mantidos no histórico de pedidos anteriores. |
-| **Dependências** | FF-UC-010 (restaurante cadastrado). |
-| **Fonte** | Administrador do Restaurante (USER-002) |
-| **Prioridade** | Alta |
-
----
-
-#### UC12: Marcar Item como Indisponível
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-012 |
-| **Nome** | Marcar Item como Indisponível |
-| **Descrição** | O administrador do restaurante deve poder marcar um item do cardápio como temporariamente indisponível sem precisar excluí-lo, tornando-o visível ao cliente porém bloqueado para adição ao carrinho. |
-| **Extensões** | Programar reativação automática do item em data e horário futuros. |
-| **Critérios de Aceitação** | (a) A mudança de disponibilidade deve ser refletida para o cliente em até 30 segundos. (b) O item indisponível deve ser exibido com indicação visual clara. (c) O administrador deve poder reverter o estado de volta a disponível a qualquer momento. |
-| **Dependências** | FF-UC-011 (gerenciamento de cardápio). |
-| **Fonte** | Administrador do Restaurante (USER-002) |
-| **Prioridade** | Alta |
-
----
-
-#### UC13: Configurar Horários de Funcionamento
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-013 |
-| **Nome** | Configurar Horários de Funcionamento |
-| **Descrição** | O administrador do restaurante deve poder definir os horários de abertura e fechamento para cada dia da semana, bem como configurar exceções para feriados ou eventos especiais. |
-| **Extensões** | Configurar pausas intermediárias (ex.: das 15h às 17h); ativar modo "fechado temporariamente" com prazo de reabertura. |
-| **Critérios de Aceitação** | (a) Fora do horário configurado, o restaurante deve aparecer automaticamente como fechado na listagem de clientes. (b) Alterações de horário devem entrar em vigor imediatamente após salvar. |
-| **Dependências** | FF-UC-010 (restaurante cadastrado). |
-| **Fonte** | Administrador do Restaurante (USER-002) |
-| **Prioridade** | Alta |
-
----
-
-#### UC14: Receber e Gerenciar Pedidos
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-014 |
-| **Nome** | Receber e Gerenciar Pedidos |
-| **Descrição** | O administrador do restaurante deve receber notificação imediata de novos pedidos e poder confirmar ou recusar cada pedido dentro de um tempo limite. Pedidos confirmados devem iniciar automaticamente o fluxo de busca por entregador. |
-| **Extensões** | Definir tempo estimado de preparo por pedido; cancelar pedido já confirmado com justificativa. |
-| **Critérios de Aceitação** | (a) A notificação de novo pedido deve chegar em até 10 segundos após a confirmação do pagamento. (b) Se o restaurante não responder em 3 minutos, o sistema deve cancelar o pedido e notificar o cliente. (c) Ao confirmar, o sistema deve disparar automaticamente a busca por entregador disponível. |
-| **Dependências** | FF-UC-005 (pagamento aprovado); FF-UC-019 (oferta de entrega ao entregador). |
-| **Fonte** | Administrador do Restaurante (USER-002) |
-| **Prioridade** | Alta |
-
----
-
-#### UC15: Visualizar Avaliações
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-015 |
-| **Nome** | Visualizar Avaliações |
-| **Descrição** | O administrador do restaurante deve poder visualizar todas as avaliações recebidas pelos clientes, incluindo nota, comentário, data e pedido associado, além de acompanhar a evolução da nota média ao longo do tempo. |
-| **Extensões** | Responder publicamente a avaliações de clientes (futuro); denunciar avaliações impróprias para análise da plataforma. |
-| **Critérios de Aceitação** | (a) As avaliações devem ser exibidas em ordem cronológica decrescente. (b) A nota média deve ser recalculada e exibida em tempo real após nova avaliação. (c) O sistema deve permitir filtrar avaliações por período e por faixa de nota. |
-| **Dependências** | FF-UC-007 (avaliação realizada pelo cliente). |
-| **Fonte** | Administrador do Restaurante (USER-002) |
-| **Prioridade** | Média |
-
----
-
-## 1.7.3 Entregador
-
----
-
-#### UC16: Cadastrar-se como Entregador
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-016 |
-| **Nome** | Cadastrar-se como Entregador |
-| **Descrição** | O entregador deve poder criar uma conta na plataforma informando dados pessoais (nome, CPF, telefone), dados do veículo (tipo, placa) e documentos obrigatórios (CNH, comprovante de residência) para análise. |
-| **Extensões** | Atualizar dados do veículo após aprovação; reenviar documentação reprovada. |
-| **Critérios de Aceitação** | (a) O cadastro deve exigir o envio de foto legível de todos os documentos obrigatórios. (b) A análise da documentação deve ser concluída em até 3 dias úteis. (c) O entregador deve ser notificado por e-mail e push sobre aprovação ou reprovação do cadastro. |
-| **Dependências** | Nenhuma, pré-condição para todos os demais casos de uso do entregador. |
-| **Fonte** | Entregador (USER-003) |
-| **Prioridade** | Alta |
-
----
-
-#### UC17: Autenticar-se como Entregador
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-017 |
-| **Nome** | Autenticar-se como Entregador |
-| **Descrição** | O entregador deve poder fazer login na aplicação mobile com e-mail e senha cadastrados para acessar as funcionalidades de entrega. |
-| **Extensões** | Recuperação de senha via e-mail; bloqueio de acesso em caso de suspeita de conta comprometida. |
-| **Critérios de Aceitação** | (a) O login deve ser concluído em até 2 segundos em condições normais. (b) Após 5 tentativas falhas, a conta deve ser bloqueada por 15 minutos. (c) O token de sessão do entregador deve expirar em 24 horas. |
-| **Dependências** | FF-UC-016 (cadastro aprovado). |
-| **Fonte** | Entregador (USER-003) |
-| **Prioridade** | Alta |
-
----
-
-#### UC18: Definir Disponibilidade
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-018 |
-| **Nome** | Definir Disponibilidade |
-| **Descrição** | O entregador deve poder ativar ou desativar sua disponibilidade para receber ofertas de entrega a qualquer momento pelo aplicativo. Quando disponível, o sistema deve monitorar sua localização GPS. |
-| **Extensões** | Definir pausa programada com retorno automático; indicar motivo da indisponibilidade (almoço, fim de expediente). |
-| **Critérios de Aceitação** | (a) A mudança de status deve ser processada em até 3 segundos. (b) Ao ficar disponível, o sistema deve iniciar o monitoramento GPS imediatamente. (c) Ao ficar indisponível, nenhuma nova oferta deve ser enviada e o GPS deve ser desativado. (d) Ação só poderá ser feita, caso o entregador não esteja com um pedido em andamento. |
-| **Dependências** | FF-UC-017 (autenticação do entregador). |
-| **Fonte** | Entregador (USER-003) |
-| **Prioridade** | Alta |
-
----
-
-#### UC19: Receber Oferta de Entrega
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-019 |
-| **Nome** | Receber Oferta de Entrega |
-| **Descrição** | O entregador deve receber uma notificação com os detalhes da entrega disponível (restaurante, endereço de entrega, valor da corrida, distância estimada) e decidir entre aceitar ou recusar. |
-| **Extensões** | Recusar entrega (FF-UC-021) sem penalidade até um limite de recusas consecutivas. |
-| **Critérios de Aceitação** | (a) A oferta deve expirar em 30 segundos caso o entregador não responda, sendo repassada ao próximo entregador disponível. (b) O sistema deve priorizar entregadores mais próximos ao restaurante. |
-| **Dependências** | FF-UC-018 (entregador disponível); FF-UC-014 (pedido confirmado pelo restaurante). |
-| **Fonte** | Entregador (USER-003) |
-| **Prioridade** | Alta |
-
----
-
-#### UC20: Aceitar Entrega
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-020 |
-| **Nome** | Aceitar Entrega |
-| **Descrição** | Ao aceitar uma oferta de entrega, o entregador deve ser direcionado automaticamente à tela de navegação com rota até o restaurante, e o cliente e o restaurante devem ser notificados da aceitação. |
-| **Extensões** | Visualizar rota alternativa em caso de trânsito; contato via chat anonimizado com o restaurante. |
-| **Critérios de Aceitação** | (a) A aceitação deve ser processada em até 3 segundos e bloquear a oferta para outros entregadores. (b) O mapa com rota até o restaurante deve ser exibido imediatamente após a aceitação. (c) O cliente deve receber notificação de confirmação em até 10 segundos. |
-| **Dependências** | FF-UC-019 (oferta recebida); API de Mapas. |
-| **Fonte** | Entregador (USER-003) |
-| **Prioridade** | Alta |
-
----
-
-#### UC21: Recusar Entrega
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-021 |
-| **Nome** | Recusar Entrega |
-| **Descrição** | O entregador deve poder recusar uma oferta de entrega antes do prazo de 30 segundos expirar. A oferta deve ser repassada imediatamente ao próximo entregador disponível. |
-| **Extensões** | Informar motivo da recusa (distância, rota, valor); penalidade por excesso de recusas consecutivas. |
-| **Critérios de Aceitação** | (a) A recusa deve ser registrada com timestamp. (b) Após 5 recusas consecutivas sem aceitar nenhuma entrega, o sistema deve notificar o entregador sobre possível impacto no ranking. (c) A oferta deve ser repassada imediatamente ao próximo entregador disponível. |
-| **Dependências** | FF-UC-019 (oferta recebida). |
-| **Fonte** | Entregador (USER-003) |
-| **Prioridade** | Média |
-
----
-
-#### UC22: Atualizar Status da Entrega
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-022 |
-| **Nome** | Atualizar Status da Entrega |
-| **Descrição** | O entregador deve poder atualizar manualmente o status da entrega conforme o fluxo: "A caminho do restaurante" → "Pedido coletado" → "A caminho do cliente" → "Entrega concluída". |
-| **Extensões** | Reportar problema na entrega (endereço não encontrado, cliente ausente); tirar foto como comprovante de entrega. |
-| **Critérios de Aceitação** | (a) Cada atualização de status deve ser registrada com timestamp e posição GPS. (b) A mudança de status deve ser refletida na tela do cliente em até 5 segundos. (c) O status "Entrega concluída" deve ser irreversível e acionar o pagamento ao entregador. |
-| **Dependências** | FF-UC-020 (entrega aceita); FF-UC-006 (acompanhamento pelo cliente). |
-| **Fonte** | Entregador (USER-003) |
-| **Prioridade** | Alta |
-
----
-
-#### UC23: Visualizar Ganhos
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-023 |
-| **Nome** | Visualizar Ganhos |
-| **Descrição** | O entregador deve poder visualizar um painel com o resumo dos seus ganhos, incluindo valor por entrega, bônus, total diário, semanal e mensal, além do histórico de entregas realizadas. |
-| **Extensões** | Solicitar antecipação de saldo; exportar relatório de ganhos para declaração de renda. |
-| **Critérios de Aceitação** | (a) O painel de ganhos deve ser atualizado em tempo real após cada entrega concluída. (b) O entregador deve poder filtrar o histórico por data e visualizar detalhes de cada corrida. (c) O valor mínimo para saque deve ser exibido claramente. |
-| **Dependências** | FF-UC-022 (entrega concluída). |
-| **Fonte** | Entregador (USER-003) |
-| **Prioridade** | Média |
-
----
-
-## 1.7.4 Administrador da Plataforma
-
----
-
-#### UC30: Autenticar-se como Administrador da Plataforma
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-030 |
-| **Nome** | Autenticar-se como Administrador da Plataforma |
-| **Descrição** | O administrador da plataforma deve poder autenticar-se em um painel administrativo seguro com e-mail, senha e autenticação de dois fatores (2FA) para acessar funcionalidades de gestão global. |
-| **Extensões** | Revogar sessões ativas remotamente; login via SSO corporativo (futuro). |
-| **Critérios de Aceitação** | (a) O 2FA deve ser obrigatório para todos os administradores da plataforma. (b) Sessões inativas por mais de 30 minutos devem ser encerradas automaticamente. (c) Tentativas de acesso não autorizado devem gerar alerta imediato à equipe de segurança. |
-| **Dependências** | Nenhuma. |
-| **Fonte** | Administrador da Plataforma (USER-004) |
-| **Prioridade** | Alta |
-
----
-
-#### UC31: Gerenciar Usuários
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-031 |
-| **Nome** | Gerenciar Usuários |
-| **Descrição** | O administrador da plataforma deve poder visualizar, buscar, suspender, reativar e excluir contas de clientes, entregadores e administradores de restaurantes, além de redefinir senhas por solicitação. |
-| **Extensões** | Exportar lista de usuários por perfil; visualizar histórico de ações de um usuário. |
-| **Critérios de Aceitação** | (a) A busca de usuários deve retornar resultados em até 2 segundos. (b) A suspensão de um usuário deve bloquear seu acesso imediatamente. (c) A exclusão de conta deve anonimizar os dados pessoais conforme a LGPD, mantendo registros transacionais anonimizados. |
-| **Dependências** | FF-UC-030 (autenticação do administrador). |
-| **Fonte** | Administrador da Plataforma (USER-004) |
-| **Prioridade** | Alta |
-
----
-
-#### UC32: Gerenciar Restaurantes
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-032 |
-| **Nome** | Gerenciar Restaurantes |
-| **Descrição** | O administrador da plataforma deve poder aprovar, suspender ou remover restaurantes cadastrados, além de visualizar e editar seus dados cadastrais e histórico de pedidos para fins de auditoria. |
-| **Extensões** | Adicionar nota interna ao perfil do restaurante; enviar comunicado direto ao administrador do restaurante. |
-| **Critérios de Aceitação** | (a) A aprovação de um novo restaurante deve torná-lo visível na plataforma em até 5 minutos. (b) A suspensão de um restaurante deve ocultá-lo imediatamente da listagem de clientes. (c) O histórico de pedidos do restaurante deve ser acessível para auditorias. |
-| **Dependências** | FF-UC-030; FF-UC-010 (restaurante cadastrado). |
-| **Fonte** | Administrador da Plataforma (USER-004) |
-| **Prioridade** | Alta |
-
----
-
-#### UC33: Visualizar Métricas e Logs
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-033 |
-| **Nome** | Visualizar Métricas e Logs |
-| **Descrição** | O administrador da plataforma deve ter acesso a um painel com métricas operacionais em tempo real, como número de pedidos ativos, tempo médio de entrega, taxa de cancelamento, receita do período e logs de erros do sistema. |
-| **Extensões** | Exportar relatórios em CSV/PDF; configurar alertas automáticos para métricas críticas. |
-| **Critérios de Aceitação** | (a) O painel de métricas deve ser atualizado a cada 60 segundos automaticamente. (b) Os logs de sistema devem ser retidos por no mínimo 90 dias. (c) O administrador deve poder filtrar métricas por cidade, período e categoria. |
-| **Dependências** | FF-UC-030 (autenticação do administrador). |
-| **Fonte** | Administrador da Plataforma (USER-004) |
-| **Prioridade** | Alta |
-
----
-
-#### UC34: Gerenciar Disputas
-
-| **Campo** | **Descrição** |
-|---|---|
-| **Requisito ID** | FF-UC-034 |
-| **Nome** | Gerenciar Disputas |
-| **Descrição** | O administrador da plataforma deve poder visualizar, analisar e resolver disputas abertas por clientes ou restaurantes, como pedidos não entregues, cobranças incorretas ou avaliações contestadas. |
-| **Extensões** | Emitir reembolso parcial ou total ao cliente; aplicar advertência ou suspensão ao ator responsável. |
-| **Critérios de Aceitação** | (a) Novas disputas devem gerar alerta automático para a equipe de suporte. (b) O prazo máximo para resolução de uma disputa deve ser de 5 dias úteis, com atualização de status ao solicitante. (c) O sistema deve registrar o histórico completo de cada disputa, incluindo evidências e decisão tomada. |
-| **Dependências** | FF-UC-030; FF-UC-007 (avaliação); FF-UC-004 (pedido). |
-| **Fonte** | Administrador da Plataforma (USER-004) |
-| **Prioridade** | Alta |
-
+### 1.4 Priorização com MoSCoW
+
+Abaixo apresentamos a tabela consolidada com todas as 40 histórias de usuário do projeto, estimadas (Story Points) e priorizadas pelo framework MoSCoW para a definição do MVP.
+
+| ID | Subsistema | História de Usuário | Tam. (SP) | Prioridade | Justificativa |
+|:---|:---|:---|:---:|:---|:---|
+| US-CLI-001 | Cliente | Cadastro e Autenticação | 3 | **Must** | Essencial para identificação e segurança transacional. |
+| US-CLI-002 | Cliente | Busca por Localização | 5 | **Must** | Core do negócio; conecta a demanda à oferta local. |
+| US-CLI-003 | Cliente | Visualizar Cardápio | 3 | **Must** | Necessário para a tomada de decisão do cliente. |
+| US-CLI-004 | Cliente | Realizar Pedido (Carrinho) | 8 | **Must** | Fluxo principal de conversão da plataforma. |
+| US-CLI-005 | Cliente | Pagamento Online (Gateway) | 13 | **Must** | Viabiliza a transação financeira de forma segura. |
+| US-CLI-006 | Cliente | Rastreio em Tempo Real | 13 | **Should** | Relevante, mas o sistema base funciona com simples notificações de status no MVP. |
+| US-CLI-007 | Cliente | Avaliações | 3 | **Could** | Agrega valor e confiança, mas pode ser lançado pós-MVP. |
+| US-CLI-008 | Cliente | Histórico de Pedidos | 3 | **Could** | Útil para retenção, mas secundário no primeiro lançamento. |
+| US-CLI-009 | Cliente | Endereços Favoritos | 2 | **Could** | Funcionalidade de conveniência, não bloqueia o uso principal. |
+| US-CLI-010 | Cliente | Contatar Suporte | 5 | **Should** | Importante para resolução de problemas operacionais logo no início. |
+| US-RES-001 | Restaurante | Cadastrar Perfil | 5 | **Must** | Necessário para a existência de oferta na plataforma. |
+| US-RES-002 | Restaurante | Gerenciar Cardápio | 5 | **Must** | Permite manter a lista de produtos atualizada. |
+| US-RES-003 | Restaurante | Indisponibilizar Itens | 3 | **Must** | Evita a venda de produtos sem estoque, reduzindo cancelamentos. |
+| US-RES-004 | Restaurante | Configurar Horários | 3 | **Must** | Evita que pedidos cheguem quando o local está fechado. |
+| US-RES-005 | Restaurante | Gerenciar Pedidos | 8 | **Must** | Essencial para o restaurante iniciar o preparo e chamar o entregador. |
+| US-RES-006 | Restaurante | Visualizar Avaliações | 3 | **Could** | Depende do sistema de avaliações do cliente estar pronto. |
+| US-RES-007 | Restaurante | Pausar Pedidos | 3 | **Should** | Protege a saúde operacional do restaurante em horários de pico. |
+| US-RES-008 | Restaurante | Cupons de Desconto | 5 | **Could** | Estratégia de marketing que pode ser lançada na versão 2.0. |
+| US-RES-009 | Restaurante | Extrato de Repasses | 5 | **Should** | Fundamental para a transparência financeira com o parceiro. |
+| US-RES-010 | Restaurante | Chat com Entregador | 3 | **Could** | Ajuda na logística fina, mas não impede a entrega padrão. |
+| US-ENT-001 | Entregador | Cadastro de Entregador | 5 | **Must** | Necessário para compor a frota de logística. |
+| US-ENT-002 | Entregador | Autenticação | 3 | **Must** | Segurança e acesso ao perfil do trabalhador. |
+| US-ENT-003 | Entregador | Definir Disponibilidade | 3 | **Must** | Controla quando o entregador deseja começar a trabalhar. |
+| US-ENT-004 | Entregador | Receber Oferta | 5 | **Must** | O motor de alocação de corridas é o coração logístico do app. |
+| US-ENT-005 | Entregador | Aceitar/Recusar Entrega | 8 | **Must** | Fluxo vital para conectar o pedido à entrega física. |
+| US-ENT-006 | Entregador | Atualizar Status | 5 | **Must** | Gatilho para avisar o cliente e liberar o pagamento da corrida. |
+| US-ENT-007 | Entregador | Painel de Ganhos | 5 | **Should** | Importante para a retenção de entregadores no app. |
+| US-ENT-008 | Entregador | Reportar Problema | 5 | **Should** | Necessário para tratamento de exceções (ex: pneu furado). |
+| US-ENT-009 | Entregador | Chat com Cliente | 3 | **Could** | Facilita encontrar o endereço, mas rotas GPS costumam ser suficientes no MVP. |
+| US-ENT-010 | Entregador | Histórico de Rotas | 5 | **Won't** | Feature analítica avançada, fora do escopo inicial. |
+| US-ADM-001 | Admin | Autenticação 2FA | 5 | **Must** | Segurança obrigatória para acessar dados sensíveis do sistema. |
+| US-ADM-002 | Admin | Gerenciar Usuários | 5 | **Must** | Controle de qualidade e bloqueio de usuários mal-intencionados. |
+| US-ADM-003 | Admin | Aprovar Restaurantes | 5 | **Should** | No MVP, a aprovação poderia ser manual direto no banco de dados, mas é muito recomendada. |
+| US-ADM-004 | Admin | Dashboard de Métricas | 8 | **Won't** | No início, relatórios podem ser extraídos via scripts de banco de dados. |
+| US-ADM-005 | Admin | Gerenciar Disputas | 5 | **Should** | Essencial para o atendimento ao cliente (SAC) e reembolsos. |
+| US-ADM-006 | Admin | Raio de Entrega Dinâmico | 8 | **Won't** | Funcionalidade avançada de logística, será feita futuramente. |
+| US-ADM-007 | Admin | Cupons Globais | 5 | **Won't** | Campanhas da plataforma não são o foco do lançamento inicial. |
+| US-ADM-008 | Admin | Repasse Restaurante | 8 | **Must** | Automatizar o pagamento do parceiro é requisito legal e de negócio. |
+| US-ADM-009 | Admin | Repasse Entregador | 8 | **Must** | Garantir que o entregador receba sua taxa de entrega. |
+| US-ADM-010 | Admin | Mapa de Calor Logístico | 13 | **Won't** | Funcionalidade de Big Data muito complexa para a versão inicial. |
 ---
 
 ## 2. Requisitos Não Funcionais
+
+Abaixo estão detalhados os requisitos não funcionais do sistema FoodFlow, seguindo o padrão IEEE-830 e com justificativas embasadas nas normas de qualidade de software (ISO/IEC 25010) e literatura técnica.
 
 ---
 
@@ -536,6 +228,7 @@ Serviço de Notificações              ──── Notificar Usuários
 | **Saída** | Resposta renderizada na interface do usuário (listagem, confirmação, atualização). |
 | **Restrições** | Aplica-se a todas as rotas da API pública. Operações de terceiros (gateway de pagamento, API de mapas) estão sujeitas aos SLAs dos respectivos fornecedores. |
 | **Critérios de Aceitação** | (a) 95% das requisições devem ser atendidas em até 2 segundos em carga normal. (b) Em testes de carga simulando horário de pico, o percentil 99 não deve exceder 4 segundos. (c) A experiência do usuário não deve ser prejudicada por lentidão perceptível. |
+| **Justificativa** | **ISO/IEC 25010 (Eficiência de Desempenho):** Segundo Sommerville (2019), o comportamento do sistema em relação ao tempo afeta diretamente a retenção de usuários. Tempos acima de 4 segundos aumentam drasticamente a taxa de abandono do carrinho de compras. |
 
 ---
 
@@ -551,6 +244,7 @@ Serviço de Notificações              ──── Notificar Usuários
 | **Saída** | Interface funcional ou mensagem de manutenção programada clara ao usuário. |
 | **Restrições** | Manutenções emergenciais podem ocorrer fora da janela programada, mas devem ser comunicadas aos parceiros com antecedência mínima de 1 hora. |
 | **Critérios de Aceitação** | (a) O sistema não deve ficar indisponível mais de 3,6 horas por mês. (b) Falhas inesperadas devem acionar alertas automáticos à equipe de operações. (c) Nenhuma manutenção programada deve ocorrer entre 11h e 22h. |
+| **Justificativa** | **ISO/IEC 25010 (Confiabilidade - Disponibilidade):** A indisponibilidade do sistema durante horários de refeição gera falha no processo de negócio principal, resultando em perda de receita imediata e quebra de confiança por parte dos restaurantes e clientes. |
 
 ---
 
@@ -566,6 +260,7 @@ Serviço de Notificações              ──── Notificar Usuários
 | **Saída** | Tempo de resposta dentro dos limites do NF-FF-001 mesmo em carga elevada. |
 | **Restrições** | Estimativa de 20.000 pedidos processados no primeiro ano. Picos esperados de 500 pedidos/hora nos horários de almoço e jantar. |
 | **Critérios de Aceitação** | (a) Testes de carga devem simular 500 usuários simultâneos sem degradação de desempenho. (b) A arquitetura deve permitir adição de instâncias sem downtime (zero-downtime deploy). (c) O banco de dados deve suportar ao menos 10.000 transações por hora. |
+| **Justificativa** | **Arquitetura de Software e ISO/IEC 25010 (Eficiência de Desempenho - Capacidade):** Plataformas de delivery possuem sazonalidade extrema. O provisionamento elástico (auto-scaling) é mandatório para suportar os picos de tráfego sem ociosidade de infraestrutura nos períodos de baixa demanda. |
 
 ---
 
@@ -581,6 +276,7 @@ Serviço de Notificações              ──── Notificar Usuários
 | **Saída** | Acesso concedido ou negado com mensagem de erro padronizada (HTTP 401/403). |
 | **Restrições** | Senhas devem ser armazenadas com hash (bcrypt, mínimo custo 12). Dados de cartão não devem ser persistidos nos servidores do FoodFlow. Tokens JWT devem expirar em 24 horas. |
 | **Critérios de Aceitação** | (a) Um cliente não deve conseguir acessar endpoints de administração de restaurante. (b) Todas as requisições à API devem trafegar exclusivamente via HTTPS. (c) Tentativas de brute-force devem ser bloqueadas após 5 tentativas falhas consecutivas (bloqueio de 15 minutos). |
+| **Justificativa** | **ISO/IEC 25010 (Segurança - Confidencialidade e Autenticidade):** O tráfego de dados financeiros e pessoais exige a mitigação de vulnerabilidades (ex: injeções, interceptação de dados). O uso de JWT e HTTPS assegura que informações sensíveis não sejam expostas. |
 
 ---
 
@@ -596,6 +292,7 @@ Serviço de Notificações              ──── Notificar Usuários
 | **Saída** | Confirmação de consentimento registrado; relatório de dados pessoais disponível para exportação pelo usuário. |
 | **Restrições** | Dados de localização GPS do entregador devem ser utilizados exclusivamente para o rastreamento ativo de entregas e descartados após a conclusão. Nenhum dado pessoal pode ser compartilhado com terceiros sem consentimento. |
 | **Critérios de Aceitação** | (a) O fluxo de cadastro deve exibir e exigir aceite da Política de Privacidade. (b) O usuário deve poder solicitar exclusão de conta e dados a qualquer momento. (c) A plataforma não deve armazenar dados de localização após a conclusão do pedido. |
+| **Justificativa** | **Engenharia de Requisitos (Restrições Legais):** Requisito obrigatório para garantir a adequação legal do software. O descumprimento dos princípios de *Privacy by Design* previstos na lei brasileira pode acarretar bloqueio do serviço e sanções financeiras severas. |
 
 ---
 
@@ -611,6 +308,7 @@ Serviço de Notificações              ──── Notificar Usuários
 | **Saída** | Fluxo de pedido concluído com confirmação clara ao usuário. |
 | **Restrições** | O design responsivo deve suportar telas a partir de 320px de largura. O contraste das cores deve atender ao nível AA das diretrizes WCAG 2.1. |
 | **Critérios de Aceitação** | (a) Teste de usabilidade com 5 usuários novatos deve demonstrar conclusão do primeiro pedido em até 4 minutos. (b) A interface deve ser funcional nos navegadores Chrome, Firefox e Safari (últimas 2 versões). (c) O app mobile deve ser compatível com Android 10+ e iOS 14+. |
+| **Justificativa** | **ISO/IEC 25010 (Usabilidade - Apreensibilidade e Acessibilidade):** Um design centrado no utilizador é vital para plataformas de consumo de massa. Atender às diretrizes WCAG garante que a plataforma seja acessível e tenha uma curva de aprendizagem mínima. |
 
 ---
 
@@ -626,6 +324,7 @@ Serviço de Notificações              ──── Notificar Usuários
 | **Saída** | Marcador de posição atualizado no mapa da tela de acompanhamento do cliente. |
 | **Restrições** | A atualização de posição não deve consumir mais de 5% de bateria do dispositivo do entregador por hora. Dados de localização só devem ser transmitidos durante entregas ativas. |
 | **Critérios de Aceitação** | (a) A posição do entregador deve ser atualizada com atraso máximo de 20 segundos na interface do cliente. (b) Em caso de perda de sinal do entregador, o sistema deve exibir a última posição conhecida com indicação de tempo. (c) A conexão WebSocket deve ser restabelecida automaticamente em até 5 segundos após queda. |
+| **Justificativa** | **ISO/IEC 25010 (Adequação Funcional - Completude funcional):** O rastreamento em tempo real é uma exigência do mercado atual (estado da arte) para aplicativos de delivery, reduzindo a ansiedade do cliente e diminuindo chamadas para o suporte. |
 
 ---
 
@@ -641,6 +340,7 @@ Serviço de Notificações              ──── Notificar Usuários
 | **Saída** | Interface funcional e otimizada para o dispositivo utilizado. |
 | **Restrições** | Funcionalidades de GPS e notificações push têm dependência de permissões do sistema operacional do dispositivo. O app mobile deve pesar menos de 30 MB no download inicial. |
 | **Critérios de Aceitação** | (a) Todas as funcionalidades críticas (pedido, pagamento, rastreamento) devem funcionar tanto no web quanto no mobile. (b) O app deve passar na revisão das lojas Google Play e Apple App Store. (c) A versão web deve ser totalmente funcional sem instalação de plugins adicionais. |
+| **Justificativa** | **ISO/IEC 25010 (Portabilidade - Adaptabilidade):** O software precisa se comportar adequadamente nos diversos ecossistemas dos utilizadores finais (dispositivos móveis e browsers), garantindo assim um maior alcance de mercado. |
 
 ---
 
@@ -656,6 +356,7 @@ Serviço de Notificações              ──── Notificar Usuários
 | **Saída** | Notificação recebida no dispositivo do destinatário em até 10 segundos após o evento. |
 | **Restrições** | O usuário deve poder configurar quais notificações deseja receber. Notificações de marketing devem respeitar o horário preferencial do usuário. |
 | **Critérios de Aceitação** | (a) Notificações críticas (novo pedido para restaurante, entrega aceita para cliente) devem ser entregues em até 10 segundos. (b) O sistema deve registrar log de todas as notificações enviadas com status de entrega. (c) O usuário deve conseguir desativar notificações não críticas sem perder as operacionais. |
+| **Justificativa** | **ISO/IEC 25010 (Usabilidade - Proteção contra erros de operação e feedback):** As notificações servem como o principal meio de feedback assíncrono do sistema, informando os usuários sobre mudanças de estado sem que precisem atualizar a aplicação constantemente. |
 
 ---
 
